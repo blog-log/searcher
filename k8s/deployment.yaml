@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searcher
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: searcher
+  template:
+    metadata:
+      labels:
+        app: searcher
+    spec:
+      containers:
+        - image: cheapacr.azurecr.io/searcher:186b29282f57038699b84909d1bac5e2de237774
+          name: searcher
+          ports:
+            - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: algolia-secret
