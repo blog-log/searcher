@@ -38,7 +38,3 @@ func (s *SearchServer) Run(ctx context.Context, cfg *config.Algolia) error {
 
 	return nil
 }
-
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1>Welcome to my web server!</h1>"))
-}
