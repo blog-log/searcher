@@ -22,17 +22,20 @@ func NewSearchServer() *SearchServer {
 
 func (s *SearchServer) Run(ctx context.Context, cfg *config.Algolia) error {
 
-	mux := mux.NewRouter().StrictSlash(true)
+	rootRouter := mux.NewRouter().StrictSlash(true)
+
+	documentRouter := rootRouter.PathPrefix("/document").Subrouter()
 
 	// setup SearchHandler
 	handler := handler.NewSearchHandler(cfg)
 
-	mux.HandleFunc("/", handler.Create).Methods("POST")
-	mux.HandleFunc("/{id}", handler.Remove).Methods("DELETE")
-	mux.HandleFunc("/search", handler.Search).Methods("POST")
+	// define routes
+	documentRouter.HandleFunc("/", handler.Create).Methods("POST")
+	documentRouter.HandleFunc("/{id}", handler.Remove).Methods("DELETE")
+	documentRouter.HandleFunc("/search", handler.Search).Methods("POST")
 
 	fmt.Println("Server started at port 8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(":8080", rootRouter); err != nil {
 		return err
 	}
 
