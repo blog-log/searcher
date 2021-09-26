@@ -30,7 +30,7 @@ func (s *SearchServer) Run(ctx context.Context, cfg *config.Algolia) error {
 	handler := handler.NewSearchHandler(cfg)
 
 	// define routes
-	documentRouter.HandleFunc("/", handler.Create).Methods("POST")
+	documentRouter.HandleFunc("", handler.Create).Methods("POST")
 	documentRouter.HandleFunc("/{id}", handler.Remove).Methods("DELETE")
 	documentRouter.HandleFunc("/search", handler.Search).Methods("POST")
 
