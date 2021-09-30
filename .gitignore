@@ -15,5 +15,12 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
 
-k8s/secret.yaml
+k8s/*secret*.yaml
